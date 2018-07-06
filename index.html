@@ -126,163 +126,60 @@ var refresh = function() {
 			var url = $this.attr('src');
 			$this.find('header > a').attr('href', url)
 			
-			/*var xhr = new XMLHttpRequest();
-			if('withCredentials' in xhr) {
+			$this.find('.status').removeClass().addClass('status status-warning');
+			$this.find('.status-notice').html('Checking status..');
 			
-				// Check if the XMLHttpRequest object has a "withCredentials" property.
-				// "withCredentials" only exists on XMLHTTPRequest2 objects.
-				xhr.open('GET', url, true);
-			
-			} else if (typeof XDomainRequest != 'undefined') {
-			
-				// Otherwise, check if XDomainRequest.
-				// XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-				xhr = new XDomainRequest();
-				xhr.open('GET', url);
-			
-			} else {
-			
-				// Otherwise, CORS is not supported by the browser.
-				xhr = null;
-			
-			}
-			
-			if (!xhr) throw new Error('CORS not supported');
-			else {*/
-				$this.find('.status').removeClass().addClass('status status-warning');
-				$this.find('.status-notice').html('Checking status..');
+			$.ajax({
+				url: url,
+				type: 'GET',
+				dataType: 'jsonp'
+			}).then(function(data, textStatus, xhr) {
+				console.log('DONE', url, '/', data, '...', textStatus, '...', xhr);
 				
-				/*(function(url, callback) {
-					var timer = setTimeout(function() {
-						callback(false); // timeout after 5 seconds
-					}, 5000);
-					
-					var img = document.createElement('img');
-					img.onload = function() {
-						clearTimeout(timer);
-						callback(true);
-					}
-					img.onerror = function() {
-						clearTimeout(timer);
-						callback(false);
-					}
-					img.src = url + '/favicon.ico';
-				})(url, function(loaded) {
-					if(loaded) {
-						$this.find('.status').removeClass().addClass('status status-success');
-						$this.find('.status-notice').html('Service seems OK!');
-					} else {
-						$this.find('.status').removeClass().addClass('status status-danger');
-						$this.find('.status-notice').html('Service seems down :/');
-					}
-				});*/
+				/** Everything is fine. */
+				$this.find('.status').removeClass().addClass('status status-primary');
+				$this.find('.status-notice').html('Service is fine! (Status ' + xhr.status + ')');
+			}, function(xhr, textStatus, errorThrown) {
+				//console.log('FAIL', url, ':', xhr, textStatus, errorThrown);
+				console.log('FAIL', url, ':', xhr, textStatus);
 				
-				/*xhr.withCredentials = true;
-				xhr.overrideMimeType('text/plain');
-				xhr.onreadystatechange = function() {
-					if(xhr.readyState == 4) {
-						if(xhr.status == 200) {
-							$this.find('.status').removeClass().addClass('status status-success');
-							$this.find('.status-notice').html('Service seems OK!');
-						} else {
-							$this.find('.status').removeClass().addClass('status status-danger');
-							$this.find('.status-notice').html('Service seems down :/');
-						}
-						console.log("Status: " + xhr.status);
-						console.log("Status Text: " + xhr.statusText);
-					}
-					console.log(url, '...', xhr.readyState, '/', xhr.status, xhr.statusText);
-				};
-				xhr.send(null);*/
-				
-				/*(function checkServer(url, timeout) {
-					const controller = new AbortController();
-					const signal = controller.signal;
-					const options = { mode: 'no-cors', signal };
-					return fetch(url, options)
-						.then(setTimeout(() => { controller.abort() }, timeout))
-						.then(response => console.log('Check server response:', response.statusText))
-						.catch(error => console.error('Check server error:', error.message));
-				})(url, 5000);*/
-				
-				/*$.ajaxSetup({,
-					error: function(xhr, exception) {
-						if( xhr.status === 0)
-							alert('Error : ' + xhr.status + 'You are not connected.');
-						else if( xhr.status == "201")
-							alert('Error : ' + xhr.status + '\nServer error.');
-						else if( xhr.status == "404")
-							alert('Error : ' + xhr.status + '\nPage note found');
-						else if( xhr.status == "500")
-							 alert('Internal Server Error [500].');
-						else if (exception === 'parsererror') 
-							alert('Error : ' + xhr.status + '\nImpossible to parse result.');
-						else if (exception === 'timeout')
-							alert('Error : ' + xhr.status + '\nRequest timeout.');
-						else
-							alert('Error .\n' + xhr.responseText);
-					}
-				});*/
-				
-				$.ajax({
-					url: url,
-					type: 'GET',
-					dataType: 'jsonp'
-				}).then(function(data, textStatus, xhr) {
-					console.log('DONE', url, '/', data, '...', textStatus, '...', xhr);
-					
-					/** Everything is fine. */
-					$this.find('.status').removeClass().addClass('status status-primary');
-					$this.find('.status-notice').html('Service is fine! (Status ' + xhr.status + ')');
-				}, function(xhr, textStatus, errorThrown) {
-					//console.log('FAIL', url, ':', xhr, textStatus, errorThrown);
-					console.log('FAIL', url, ':', xhr, textStatus);
-					
-					/** XHR query interrupted */
-					if(xhr.status === 0) {
-						$this.find('.status').removeClass().addClass('status status-danger');
-						$this.find('.status-notice').html('Request Interrupted. (Status ' + xhr.status + ')');
-					
-					/** Service Online */
-					} else if(xhr.status == 200) {
-						$this.find('.status').removeClass().addClass('status status-success');
-						$this.find('.status-notice').html('Service seems OK! (Status ' + xhr.status + ')');
-					
-					/** 201 Created */
-					} else if(xhr.status == 201) {
-						$this.find('.status').removeClass().addClass('status status-warning'); 
-						$this.find('.status-notice').html('Server error. (Status ' + xhr.status + ')');
-					
-					/** 404 Not Found */
-					} else if(xhr.status == 404) {
-						$this.find('.status').removeClass().addClass('status status-warning'); 
-						$this.find('.status-notice').html('Page not found. (Status ' + xhr.status + ')');
-					
-					/** 500 Internal server error */
-					} else if(xhr.status == 500) {
-						$this.find('.status').removeClass().addClass('status status-danger'); 
-						$this.find('.status-notice').html('Internal server error. (Status ' + xhr.status + ')');
-					
-					} else {
-						$this.find('.status').removeClass().addClass('status status-danger');
-						$this.find('.status-notice').html('Error! (Status ' + xhr.status + ')');
-					}
-					
-					if(exception === 'parsererror') console.log(url, 'Impossible to parse result.');
-					else if(exception === 'timeout') console.log(url, 'Request timeout.');
-					else console.log(url, 'Error!');
-					
+				/** XHR query interrupted */
+				if(xhr.status === 0) {
 					$this.find('.status').removeClass().addClass('status status-danger');
-					$this.find('.status-notice').html('Service seems down :/');
-				})/*.done(function(response) {
+					$this.find('.status-notice').html('Request Interrupted. (Status ' + xhr.status + ')');
+				
+				/** Service Online */
+				} else if(xhr.status == 200) {
 					$this.find('.status').removeClass().addClass('status status-success');
-					$this.find('.status-notice').html('Service seems OK!');
-				}).fail(function() {
+					$this.find('.status-notice').html('Service seems OK! (Status ' + xhr.status + ')');
+				
+				/** 201 Created */
+				} else if(xhr.status == 201) {
+					$this.find('.status').removeClass().addClass('status status-warning'); 
+					$this.find('.status-notice').html('Server error. (Status ' + xhr.status + ')');
+				
+				/** 404 Not Found */
+				} else if(xhr.status == 404) {
+					$this.find('.status').removeClass().addClass('status status-warning'); 
+					$this.find('.status-notice').html('Page not found. (Status ' + xhr.status + ')');
+				
+				/** 500 Internal server error */
+				} else if(xhr.status == 500) {
+					$this.find('.status').removeClass().addClass('status status-danger'); 
+					$this.find('.status-notice').html('Internal server error. (Status ' + xhr.status + ')');
+				
+				} else {
 					$this.find('.status').removeClass().addClass('status status-danger');
-					$this.find('.status-notice').html('Service seems down :/');
-				})*/;
-			//}
-			
+					$this.find('.status-notice').html('Error! (Status ' + xhr.status + ')');
+				}
+				
+				if(exception === 'parsererror') console.log(url, 'Impossible to parse result.');
+				else if(exception === 'timeout') console.log(url, 'Request timeout.');
+				else console.log(url, 'Error!');
+				
+				$this.find('.status').removeClass().addClass('status status-danger');
+				$this.find('.status-notice').html('Service seems down :/');
+			});
 		});
 	}
 	
