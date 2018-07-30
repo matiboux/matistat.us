@@ -45,7 +45,7 @@ $supportedServices = array(
 	'matiboux.com' => 'https://matiboux.com/',
 	'matistat.us' => 'https://matistat.us/',
 	'imgshot.eu' => 'https://imgshot.eu/',
-	'urwebst.it' => 'https://urwebst.it/',
+	'urwebs.it' => 'https://urwebs.it/',
 	'olifw.net' => 'https://olifw.net/',
 	'ljv.fr' => 'https://ljv.fr/'
 );
@@ -56,7 +56,7 @@ $aliases = array(
 		'matiboux.com',
 		'matistat.us',
 		'imgshot.eu',
-		'urwebst.it',
+		'urwebs.it',
 		'olifw.net',
 		'ljv.fr'
 	],
@@ -69,6 +69,9 @@ $aliases = array(
 /** --- -- --- */
 /**  III. API  */
 /** --- -- --- */
+
+/** Allow all requests */
+header('Access-Control-Allow-Origin: *');
 
 /** Is there a script error? */
 $success = false;
