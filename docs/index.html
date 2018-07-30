@@ -129,13 +129,14 @@ var refresh = function() {
 		timer = 60;
 		
 		/** Online Status */
-		$('article .status.status-online').removeClass().addClass('status status-online status-warning');
+		// $('article .status.status-online').removeClass().addClass('status status-online status-warning');
+		$('article .status-notice').html('Checking status..');
 		$.ajax({
 			url: 'https://status.matiboux.com/',
 			type: 'GET',
 			dataType: 'json'
 		}).then(function(data, textStatus, xhr) {
-			console.log(data, textStatus, xhr);
+			//console.log(data, textStatus, xhr);
 			$.each(data.statuses, function(index, value) {
 				var $this = $('article[hook="' + index + '"]');
 				
@@ -165,7 +166,7 @@ var refresh = function() {
 				}
 			});
 		}, function(xhr, textStatus, errorThrown) {
-			console.log(xhr, textStatus, errorThrown);
+			//console.log(xhr, textStatus, errorThrown);
 			alert('Status API error');
 			$('article .status.status-online').removeClass().addClass('status status-online');
 		});
@@ -176,8 +177,7 @@ var refresh = function() {
 			var url = $this.attr('src');
 			$this.find('header > a').attr('href', url)
 			
-			$this.find('.status.status-local').removeClass().addClass('status status-local status-warning');
-			$this.find('.status-notice').html('Checking status..');
+			//$this.find('.status.status-local').removeClass().addClass('status status-local status-warning');
 			
 			$.ajax({
 				url: url,
@@ -189,7 +189,7 @@ var refresh = function() {
 				/** Everything is fine. */
 				$this.find('.status.status-local').removeClass().addClass('status status-local status-primary')
 					.parent().attr({title: 'Local Status: Service is fine!', http: xhr.status});
-				$this.find('.status-notice').html('Service is fine! (Status ' + xhr.status + ')');
+				//$this.find('.status-notice').html('Service is fine! (Status ' + xhr.status + ')');
 			}, function(xhr, textStatus, errorThrown) {
 				//console.log('FAIL', url, ':', xhr, textStatus, errorThrown);
 				console.log('FAIL', url, ':', xhr, textStatus);
