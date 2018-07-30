@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
 html { position: relative; min-height: 100% }
 body {font-family: 'Roboto', Verdana, sans-serif; background: #202020; height: 100%; margin: 0; color: #fff; overflow-x: hidden; }
-/* hr { border-color: rgba(255, 255, 255, .1) } */
 
 a { color: #50a0f0; text-decoration: none }
 a:hover, a:focus { color: #4080c0; text-decoration: underline }
@@ -13,22 +12,37 @@ a:hover, a:focus { color: #4080c0; text-decoration: underline }
 .float-left { float: left }
 .float-right { float: right }
 
+
+/** Status Items */
+abbr { cursor: help }
+.status { background: #808080; display: block; width: 10px; height: 10px; border-radius: 50% }
+.status.status-local { opacity: .5 }
+.status.status-api { display: inline-block; margin-right: 5px }
+.status.status-primary { background: #50a0f0 }
+.status.status-success { background: #50f050 }
+.status.status-info { background: #a050f0 }
+.status.status-warning { background: #f0a050 }
+.status.status-danger { background: #f05050 }
+.status-notice { color: #c0c0c0; font-size: 14px }
+.status-notice.status-local { display: none }
+
 /** Header */
-#header { display: flex; padding: 20px 40px; flex-wrap: wrap; justify-content: space-between; align-items: center }
+#header { display: flex; padding: 20px 40px; flex-wrap: wrap; justify-content: left; align-items: center }
 #header > * { flex: none; margin: 10px !important }
+#header > * + * { margin-left: 20px !important }
 #header .title { margin-right: 30px; text-align: right }
 #header .title h1 { margin: 0; font-size: 60px; font-weight: bold }
 #header .title h1 a { color: #fff }
-#header .title p { margin: 0; font-size: 18px }
+#header .title p { margin: 0; font-size: 20px }
+#header .infos { padding: 10px; padding-left: 20px; border-left: 2px solid #f0f0f0 }
 #header .timer { color: #c0c0c0; font-size: 14px }
 #header .timer span { color: #f0a050 }
 @media (max-width: 800px) {
 	#header .title h1 { font-size: 40px }
-	#header .title p { font-size: 14px }
-	#header .timer { font-size: 12px } }
+	#header .title p { font-size: 16px } }
 
 /** Main */
-#main { background: #303030; padding: 30px; overflow: hidden }
+#main { background: #303030; padding: 30px; font-size: 16px; overflow: hidden }
 #main > * { margin: 20px 0 }
 #main > * + * { padding-top: 20px; border-top: 2px solid #404040 }
 #main > ul.settings { margin: 0; padding: 0; list-style: none }
@@ -40,14 +54,6 @@ a:hover, a:focus { color: #4080c0; text-decoration: underline }
 #main > article > header { margin: 0 0 5px }
 #main > article > header > * { display: inline-block; margin: 0; vertical-align: middle }
 #main > article > header > * + * { margin-left: 5px }
-#main > article > header abbr { cursor: help }
-#main > article > header .status { background: #808080; display: block; width: 10px; height: 10px; border-radius: 50% }
-#main > article > header .status.status-local { opacity: .5 }
-#main > article > header .status.status-primary { background: #50a0f0 }
-#main > article > header .status.status-success { background: #50f050 }
-#main > article > header .status.status-info { background: #a050f0 }
-#main > article > header .status.status-warning { background: #f0a050 }
-#main > article > header .status.status-danger { background: #f05050 }
 #main > article > header span { color: #808080; font-size: 14px }
 #main > article > header h2 { font-size: 30px }
 #main > article > header h2 a { color: #fff }
@@ -55,21 +61,11 @@ a:hover, a:focus { color: #4080c0; text-decoration: underline }
 #main > article > header > a[href="#"] { color: #808080; cursor: default }
 #main > article > p { margin: 0 }
 #main > article > p + p { margin-top: 10px }
-#main > article > .status-notice { color: #c0c0c0; font-size: 14px }
-/* #main > article .projects { display: flex; min-width: 300px; margin: 0 -20px; flex-wrap: wrap; justify-content: space-between } */
-/* #main > article .item { background: #202020; width: 300px; margin: 20px !important; padding: 20px; flex: 1 1 auto; border-radius: 5px } */
-/* #main > article .item > * { margin: 10px 0 } */
-/* #main > article .item > h3 { font-size: 20px } */
-/* #main > article .item > p { font-size: 16px } */
-/* #main > article .item > span { color: #c0c0c0; font-size: 14px } */
-/* #main > article .item > ul { padding: 0; color: #808080; list-style: none } */
-/* #main > article .item > ul > li { display: inline-block } */
-/* #main > article .item > ul > li.active { color: #40c0c0 } */
-/* #main > article .item > ul.infos > li.active { font-weight: bold } */
-/* #main > article .item > ul > li:not(:first-child) { margin-left: 20px } */
+@media (max-width: 800px) {
+	#main > article > header h2 { font-size: 24px }
+	#main > article > header > a { font-size: 18px } }
 
 /** Footer */
-#footer { background: #202020; display: flex; padding: 20px 30px; color: #fff; flex-wrap: wrap; justify-content: space-between; align-items: center; overflow: hidden }
-/* #footer > * { flex: 0 1 auto } */
+#footer { background: #202020; display: flex; padding: 20px 30px; color: #fff; font-size: 16px; flex-wrap: wrap; justify-content: space-between; align-items: center; overflow: hidden }
 #footer ul { margin: 0; padding: 0; list-style: none }
 #footer ul > li { margin: 5px 0 }
