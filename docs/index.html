@@ -89,7 +89,7 @@
 			<h2>Urwebs.it</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
 		</header>
-		<p class="description">An high school set of projects.</p>
+		<p class="description">Web-related stuff hosting.</p>
 		<p class="status-notice">Loading...</p>
 	</article>
 </div>
@@ -128,7 +128,7 @@ var refresh = function() {
 	} else {
 		timer = 60;
 		
-		// hook="matistat.us"
+		/** Online Status */
 		$('article .status.status-online').removeClass().addClass('status status-online status-warning');
 		$.ajax({
 			url: 'https://status.matiboux.com/',
@@ -170,6 +170,7 @@ var refresh = function() {
 			$('article .status.status-online').removeClass().addClass('status status-online');
 		});
 		
+		/** Local Status */
 		$('#main > article').each(function() {
 			var $this = $(this);
 			var url = $this.attr('src');
