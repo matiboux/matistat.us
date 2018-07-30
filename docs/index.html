@@ -26,9 +26,10 @@
 		<li id="toggleDns" class="toggled"><i class="fas fa-globe fa-fw"></i> Domains View</li>
 		<li id="toggleHttp"><i class="fas fa-project-diagram fa-fw"></i> Projects View</li>
 	</ul>-->
-	<article type="dns" src="https://matistat.us/">
+	<article type="domain" hook="matistat.us" src="https://matistat.us/">
 		<header>
-			<i class="status"></i>
+			<abbr title="Local Status"><i class="status status-local"></i></abbr>
+			<abbr title="Online Status"><i class="status status-online"></i></abbr>
 			<span>Domain</span>
 			<h2>Matistat.us</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -36,9 +37,10 @@
 		<p class="description">Status for my projects and.. you're right here! <i class="fas fa-heart fa-fw" style="color: #c04040"></i></p>
 		<p class="status-notice">Loading...</p>
 	</article>
-	<article type="dns" src="https://matiboux.com/">
+	<article type="domain" hook="matiboux.com" src="https://matiboux.com/">
 		<header>
-			<i class="status"></i>
+			<abbr title="Local Status"><i class="status status-local"></i></abbr>
+			<abbr title="Online Status"><i class="status status-online"></i></abbr>
 			<span>Domain</span>
 			<h2>Matiboux.com</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -46,9 +48,10 @@
 		<p class="description">My personal website. Nothing serious but the projects associated with it.</p>
 		<p class="status-notice">Loading...</p>
 	</article>
-	<article type="dns" src="https://imgshot.eu/">
+	<article type="domain" hook="imgshot.eu" src="https://imgshot.eu/">
 		<header>
-			<i class="status"></i>
+			<abbr title="Local Status"><i class="status status-local"></i></abbr>
+			<abbr title="Online Status"><i class="status status-online"></i></abbr>
 			<span>Domain</span>
 			<h2>ImgShot.eu</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -56,9 +59,10 @@
 		<p class="description">Open source and free image hosting service.</p>
 		<p class="status-notice">Loading...</p>
 	</article>
-	<article type="dns" src="https://ljv.fr/">
+	<article type="domain" hook="ljv.fr" src="https://ljv.fr/">
 		<header>
-			<i class="status"></i>
+			<abbr title="Local Status"><i class="status status-local"></i></abbr>
+			<abbr title="Online Status"><i class="status status-online"></i></abbr>
 			<span>Domain</span>
 			<h2>Ljv.fr</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -66,9 +70,10 @@
 		<p class="description">A high school set of projects.</p>
 		<p class="status-notice">Loading...</p>
 	</article>
-	<article type="dns" src="https://olifw.net/">
+	<article type="domain" hook="olifw.net" src="https://olifw.net/">
 		<header>
-			<i class="status"></i>
+			<abbr title="Local Status"><i class="status status-local"></i></abbr>
+			<abbr title="Online Status"><i class="status status-online"></i></abbr>
 			<span>Domain</span>
 			<h2>Olifw.net</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -76,9 +81,10 @@
 		<p class="description">Website and documentation for Oli, my personal PHP framework.</p>
 		<p class="status-notice">Loading...</p>
 	</article>
-	<article type="dns" src="https://urwebs.it/">
+	<article type="domain" hook="urwebs.it" src="https://urwebs.it/">
 		<header>
-			<i class="status"></i>
+			<abbr title="Local Status"><i class="status status-local"></i></abbr>
+			<abbr title="Online Status"><i class="status status-online"></i></abbr>
 			<span>Domain</span>
 			<h2>Urwebs.it</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -91,7 +97,7 @@
 <footer id="footer">
 	<section>
 		<ul>
-			<li><i class="fab fa-github fa-fw"></i> <a href="https://github.com/matiboux/matistat.us">Open-Source Repository</a></li>
+			<li><i class="fab fa-github fa-fw"></i> <a href="https://github.com/matiboux/matistat.us">Open-Source Repository</a> (Website & API)</li>
 			<li><i class="fas fa-globe fa-fw"></i> Check out <a href="https://matiboux.com/">my website</a></li>
 		</ul>
 	</section>
@@ -122,12 +128,54 @@ var refresh = function() {
 	} else {
 		timer = 60;
 		
+		// hook="matistat.us"
+		$('article .status.status-online').removeClass().addClass('status status-online status-warning');
+		$.ajax({
+			url: 'https://status.matiboux.com/',
+			type: 'GET',
+			dataType: 'json'
+		}).then(function(data, textStatus, xhr) {
+			console.log(data, textStatus, xhr);
+			$.each(data.statuses, function(index, value) {
+				var $this = $('article[hook="' + index + '"]');
+				
+				/** Request error */
+				if(!value.success) {
+					$this.find('.status.status-online').removeClass().addClass('status status-online status-danger')
+						.parent().attr({title: 'Online Status: Request error.', http: value.http_code});
+					$this.find('.status-notice').html('Request error. (Status ' + value.http_code + ')');
+				
+				/** HTTP 2xx - Service OK */
+				} else if(value.http_code >= 200 && value.http_code < 300) {
+					$this.find('.status.status-online').removeClass().addClass('status status-online status-success')
+						.parent().attr({title: 'Online Status: Service OK!', http: value.http_code});
+					$this.find('.status-notice').html('Service OK! (Status ' + value.http_code + ')');
+				
+				/** HTTP 3xx, 4xx - Service Unavailable */
+				} else if(value.http_code >= 300 && value.http_code < 500) {
+					$this.find('.status.status-online').removeClass().addClass('status status-online status-warning')
+						.parent().attr({title: 'Online Status: Service Unavailable.', http: value.http_code});
+					$this.find('.status-notice').html('Service Unavailable. (Status ' + value.http_code + ')');
+				
+				/** Service Down */
+				} else {
+					$this.find('.status.status-online').removeClass().addClass('status status-online status-danger')
+						.parent().attr({title: 'Online Status: Service Down.', http: value.http_code});
+					$this.find('.status-notice').html('Service Down. (Status ' + value.http_code + ')');
+				}
+			});
+		}, function(xhr, textStatus, errorThrown) {
+			console.log(xhr, textStatus, errorThrown);
+			alert('Status API error');
+			$('article .status.status-online').removeClass().addClass('status status-online');
+		});
+		
 		$('#main > article').each(function() {
 			var $this = $(this);
 			var url = $this.attr('src');
 			$this.find('header > a').attr('href', url)
 			
-			$this.find('.status').removeClass().addClass('status status-warning');
+			$this.find('.status.status-local').removeClass().addClass('status status-local status-warning');
 			$this.find('.status-notice').html('Checking status..');
 			
 			$.ajax({
@@ -138,47 +186,49 @@ var refresh = function() {
 				console.log('DONE', url, '/', data, '...', textStatus, '...', xhr);
 				
 				/** Everything is fine. */
-				$this.find('.status').removeClass().addClass('status status-primary');
+				$this.find('.status.status-local').removeClass().addClass('status status-local status-primary')
+					.parent().attr({title: 'Local Status: Service is fine!', http: xhr.status});
 				$this.find('.status-notice').html('Service is fine! (Status ' + xhr.status + ')');
 			}, function(xhr, textStatus, errorThrown) {
 				//console.log('FAIL', url, ':', xhr, textStatus, errorThrown);
 				console.log('FAIL', url, ':', xhr, textStatus);
 				
+				
 				/** XHR query interrupted */
 				if(xhr.status === 0) {
-					$this.find('.status').removeClass().addClass('status status-danger');
-					$this.find('.status-notice').html('Request Interrupted. (Status ' + xhr.status + ')');
+					$this.find('.status.status-local').removeClass().addClass('status status-local status-danger')
+						.parent().attr({title: 'Local Status: Request interrupted.', http: xhr.status});
+					// $this.find('.status-notice').html('Request Interrupted. (Status ' + xhr.status + ')');
 				
-				/** Service Online */
-				} else if(xhr.status == 200) {
-					$this.find('.status').removeClass().addClass('status status-success');
-					$this.find('.status-notice').html('Service seems OK! (Status ' + xhr.status + ')');
-				
-				/** 201 Created */
-				} else if(xhr.status == 201) {
-					$this.find('.status').removeClass().addClass('status status-warning'); 
-					$this.find('.status-notice').html('Server error. (Status ' + xhr.status + ')');
+				/** HTTP 2xx - Service OK */
+				} else if(xhr.status >= 200 && xhr.status < 300) {
+					$this.find('.status.status-local').removeClass().addClass('status status-local status-primary')
+						.parent().attr({title: 'Local Status: Seems OK!', http: xhr.status});
+					// $this.find('.status-notice').html('Service seems OK! (Status ' + xhr.status + ')');
 				
 				/** 404 Not Found */
 				} else if(xhr.status == 404) {
-					$this.find('.status').removeClass().addClass('status status-warning'); 
-					$this.find('.status-notice').html('Page not found. (Status ' + xhr.status + ')');
+					$this.find('.status.status-local').removeClass().addClass('status status-local status-warning')
+						.parent().attr({title: 'Local Status: Okay, but not found.', http: xhr.status}); 
+					// $this.find('.status-notice').html('Page not found. (Status ' + xhr.status + ')');
 				
 				/** 500 Internal server error */
 				} else if(xhr.status == 500) {
-					$this.find('.status').removeClass().addClass('status status-danger'); 
-					$this.find('.status-notice').html('Internal server error. (Status ' + xhr.status + ')');
+					$this.find('.status.status-local').removeClass().addClass('status status-local status-danger')
+						.parent().attr({title: 'Local Status: Internal server error.', http: xhr.status}); 
+					// $this.find('.status-notice').html('Internal server error. (Status ' + xhr.status + ')');
 				
 				} else {
-					$this.find('.status').removeClass().addClass('status status-danger');
-					$this.find('.status-notice').html('Error! (Status ' + xhr.status + ')');
+					$this.find('.status.status-local').removeClass().addClass('status status-local status-danger')
+						.parent().attr({title: 'Local Status: Error!', http: xhr.status});
+					// $this.find('.status-notice').html('Error! (Status ' + xhr.status + ')');
 				}
 				
 				if(exception === 'parsererror') console.log(url, 'Impossible to parse result.');
 				else if(exception === 'timeout') console.log(url, 'Request timeout.');
 				else console.log(url, 'Error!');
 				
-				$this.find('.status').removeClass().addClass('status status-danger');
+				$this.find('.status.status-local').removeClass().addClass('status status-local status-danger');
 				$this.find('.status-notice').html('Service seems down :/');
 			});
 		});

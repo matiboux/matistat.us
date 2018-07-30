@@ -40,7 +40,9 @@ a:hover, a:focus { color: #4080c0; text-decoration: underline }
 #main > article > header { margin: 0 0 5px }
 #main > article > header > * { display: inline-block; margin: 0; vertical-align: middle }
 #main > article > header > * + * { margin-left: 5px }
-#main > article > header .status { background: #808080; width: 10px; height: 10px; border-radius: 50% }
+#main > article > header abbr { cursor: help }
+#main > article > header .status { background: #808080; display: block; width: 10px; height: 10px; border-radius: 50% }
+#main > article > header .status.status-local { opacity: .5 }
 #main > article > header .status.status-primary { background: #50a0f0 }
 #main > article > header .status.status-success { background: #50f050 }
 #main > article > header .status.status-info { background: #a050f0 }
