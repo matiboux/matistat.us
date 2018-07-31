@@ -27,7 +27,7 @@ abbr { cursor: help }
 .status-notice.status-local { display: none }
 
 /** Header */
-#header { display: flex; padding: 20px 40px; flex-wrap: wrap; justify-content: left; align-items: center }
+#header { display: flex; padding: 40px; flex-wrap: wrap; justify-content: left; align-items: center }
 /* #header > * { flex: none } */
 #header .title { text-align: right }
 #header .title h1 { margin: 0; font-size: 60px; font-weight: bold }
@@ -43,6 +43,7 @@ abbr { cursor: help }
 	#header > * + * { margin-left: 30px }
 	#header .infos { padding: 10px; padding-left: 20px; border-left: 2px solid #f0f0f0 } }
 @media (max-width: 800px) {
+	#header { padding: 20px 40px }
 	#header .title h1 { font-size: 40px }
 	#header .title p { font-size: 16px } }
 
