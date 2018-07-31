@@ -73,6 +73,9 @@ abbr { cursor: help }
 
 /** Footer */
 #footer { background: #202020; display: flex; padding: 20px 30px; color: #fff; font-size: 16px; flex-wrap: wrap; justify-content: space-between; align-items: center; overflow: hidden }
+@media (max-width: 800px) {
+	#footer > * { width: 100% }
+	#footer > * + * { margin-top: 20px } }
 #footer ul { margin: 0; padding: 0; list-style: none }
 #footer ul > li { margin: 5px 0 }
 #footer ul > li .fab, #footer ul > li .fas { margin-right: 5px }
