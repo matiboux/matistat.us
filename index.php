@@ -15,6 +15,30 @@
 |*|  https://github.com/matiboux/matistat.us
 \*/
 
+/** Allow all requests */
+header('Access-Control-Allow-Origin: *');
+
+
+/** ----- ---- ----- */
+/**  I. Cache Check  */
+/** ----- ---- ----- */
+
+/** Cache Support? */
+$cacheSupport = true;
+/** Cache File Lifetime (seconds) */
+$cacheLifetime = 20;
+
+// Is there non-expired cache?
+if($cacheSupport AND file_exists('cache.json') AND filemtime('cache.json') + $cacheLifetime > time()) {
+	$cache = file_get_contents('cache.json');
+	
+	// Valid Cache? Okay, then return that
+	if(json_decode($cache) AND json_last_error() == JSON_ERROR_NONE) {
+		echo $cache;
+		exit;
+	}
+}
+
 
 /** --- --- --- */
 /**  I. Config  */
@@ -70,15 +94,18 @@ $aliases = array(
 /**  III. API  */
 /** --- -- --- */
 
-/** Allow all requests */
-header('Access-Control-Allow-Origin: *');
-
 /** Is there a script error? */
 $success = false;
+
+/** The timestamp after getting all services service */
+$timestamp = null;
 
 /** The services specifically requested
     Values: "all" or list of services (array). */
 $services = null;
+
+/** Selected all Services? */
+$allServices = null;
 
 /** The resulted status for all services */
 $statuses = [];
@@ -86,9 +113,11 @@ $statuses = [];
 /** The JSON response of the API */
 $response = array(
 	'success' => &$success, // Might change if an error occurs.
+	'timestamp' => &$timestamp, // Might change if an error occurs.
 	'services' => &$services, // $services value
 	'statuses' => &$statuses // All services status
 );
+$responseJSON = null;
 
 
 /** The raw URL parameter for specific services request */
@@ -107,10 +136,13 @@ if(!empty($baseurl) AND strpos($baseurl, $_SERVER['HTTP_HOST']) === 0) {
 // If $urlParam is null, rely on the (sub)domain root directory and remove the starting "/".
 if($urlParam === null) $urlParam = substr($_SERVER['REQUEST_URI'], 1) ?: null;
 
-if(empty($urlParam) OR $urlParam == 'all') $services = array_keys($supportedServices);
-else {
+if(empty($urlParam) OR $urlParam == 'all') {
+	$services = array_keys($supportedServices);
+	$allServices = true;
+} else {
 	// Set the requested services.
 	$services = json_decode($urlParam, true) ?: $urlParam;
+	$allServices = false;
 	
 	// Convert into an array, if not already.
 	if(!is_array($services)) {
@@ -172,9 +204,15 @@ if(!empty($listServices)) {
 		// Close the resource
 		curl_close($resource);
 	}
+	$timestamp = time();
+	$responseJSON = json_encode($response);
+	
+	$handle = fopen('cache.json', 'w');
+	fwrite($handle, $responseJSON);
+	fclose($handle);
 } else $success = false;
 
 /** Return API Response */
-echo json_encode($response);
+echo $responseJSON;
 exit;
 ?>
