@@ -1,6 +1,7 @@
 # Matiboux's projects status
 
-It's about ups and downs.
+It's about ups and downs.  
+Feel free to suggest changes and contribute.
 
 ---
 
