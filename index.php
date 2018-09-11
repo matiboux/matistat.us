@@ -19,9 +19,7 @@
 header('Access-Control-Allow-Origin: *');
 
 
-/** ----- ---- ----- */
-/**  I. Cache Check  */
-/** ----- ---- ----- */
+/** --- -- --- */
 
 /** Cache Support? */
 $cacheSupport = true;
@@ -40,10 +38,6 @@ if($cacheSupport AND file_exists('cache.json') AND filemtime('cache.json') + $ca
 }
 
 
-/** --- --- --- */
-/**  I. Config  */
-/** --- --- --- */
-
 /** The API base URL
     Change if your website isn't hosted on the (sub)domain root directory.
     Format: "matiboux.com/status/" (no protocol, and note the ending slash) */
@@ -53,16 +47,6 @@ $baseurl = null; // Like $baseurl = 'matiboux.com/';
 /** Timeout for a request on service */
 $timeout = 10;
 
-
-/** ---- ---- ---- */
-/**  II. Services  */
-/** ---- ---- ---- */
-
-// List of supported Services in this API:
-// - Domains:  - 
-//             - 
-// - Apps: - 
-//         - 
 
 /** List of supported services, and the url to ping */
 $supportedServices = array(
@@ -90,8 +74,6 @@ $aliases = array(
 );
 
 
-/** --- -- --- */
-/**  III. API  */
 /** --- -- --- */
 
 /** Is there a script error? */
