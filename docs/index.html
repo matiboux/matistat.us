@@ -36,8 +36,12 @@
 	</ul>-->
 	<article type="domain" hook="matistat.us" src="https://matistat.us/">
 		<header>
-			<abbr title="Local Status"><i class="status status-local"></i></abbr>
-			<abbr title="Online Status"><i class="status status-online"></i></abbr>
+			<div data-toggle="tooltip" data-placement="bottom" title="Local status">
+				<i class="status status-local"></i>
+			</div>
+			<div data-toggle="tooltip" data-placement="bottom" title="Online status">
+				<i class="status status-online"></i>
+			</div>
 			<span>Domain</span>
 			<h2>Matistat.us</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -48,8 +52,12 @@
 	</article>
 	<article type="domain" hook="matiboux.com" src="https://matiboux.com/">
 		<header>
-			<abbr title="Local Status"><i class="status status-local"></i></abbr>
-			<abbr title="Online Status"><i class="status status-online"></i></abbr>
+			<div data-toggle="tooltip" data-placement="bottom" title="Local status">
+				<i class="status status-local"></i>
+			</div>
+			<div data-toggle="tooltip" data-placement="bottom" title="Online status">
+				<i class="status status-online"></i>
+			</div>
 			<span>Domain</span>
 			<h2>Matiboux.com</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -60,8 +68,12 @@
 	</article>
 	<article type="domain" hook="imgshot.eu" src="https://imgshot.eu/">
 		<header>
-			<abbr title="Local Status"><i class="status status-local"></i></abbr>
-			<abbr title="Online Status"><i class="status status-online"></i></abbr>
+			<div data-toggle="tooltip" data-placement="bottom" title="Local status">
+				<i class="status status-local"></i>
+			</div>
+			<div data-toggle="tooltip" data-placement="bottom" title="Online status">
+				<i class="status status-online"></i>
+			</div>
 			<span>Domain</span>
 			<h2>ImgShot.eu</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -72,8 +84,12 @@
 	</article>
 	<article type="domain" hook="ljv.fr" src="https://ljv.fr/">
 		<header>
-			<abbr title="Local Status"><i class="status status-local"></i></abbr>
-			<abbr title="Online Status"><i class="status status-online"></i></abbr>
+			<div data-toggle="tooltip" data-placement="bottom" title="Local status">
+				<i class="status status-local"></i>
+			</div>
+			<div data-toggle="tooltip" data-placement="bottom" title="Online status">
+				<i class="status status-online"></i>
+			</div>
 			<span>Domain</span>
 			<h2>Ljv.fr</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -84,8 +100,12 @@
 	</article>
 	<article type="domain" hook="olifw.net" src="https://olifw.net/">
 		<header>
-			<abbr title="Local Status"><i class="status status-local"></i></abbr>
-			<abbr title="Online Status"><i class="status status-online"></i></abbr>
+			<div data-toggle="tooltip" data-placement="bottom" title="Local status">
+				<i class="status status-local"></i>
+			</div>
+			<div data-toggle="tooltip" data-placement="bottom" title="Online status">
+				<i class="status status-online"></i>
+			</div>
 			<span>Domain</span>
 			<h2>Olifw.net</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -96,8 +116,12 @@
 	</article>
 	<article type="domain" hook="urwebs.it" src="https://urwebs.it/">
 		<header>
-			<abbr title="Local Status"><i class="status status-local"></i></abbr>
-			<abbr title="Online Status"><i class="status status-online"></i></abbr>
+			<div data-toggle="tooltip" data-placement="bottom" title="Local status">
+				<i class="status status-local"></i>
+			</div>
+			<div data-toggle="tooltip" data-placement="bottom" title="Online status">
+				<i class="status status-online"></i>
+			</div>
 			<span>Domain</span>
 			<h2>Urwebs.it</h2>
 			<a href="#"><i class="fas fa-globe"></i></a>
@@ -120,8 +144,13 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script>
 (function() {
+
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip()
+});
 
 /*$('#toggleArchives').click(function() {
 	if($(this).hasClass('toggled')) $('#main .projects .item.archive').fadeOut();
