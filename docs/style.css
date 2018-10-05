@@ -57,16 +57,21 @@ abbr { cursor: help }
 #main > ul.settings > li.toggled { background: #4080c0 }
 #main > ul.settings > li.toggled:hover, #main > ul.settings > li.toggled:focus { background: #306090 }
 #main > ul.settings > li:not(:first-child) { margin-left: 10px }
+#main > article.small { color: #e0e0e0; font-size: 14px }
 #main > article > header { margin: 0 0 5px }
 #main > article > header > * { display: inline-block; margin: 0; vertical-align: middle }
 #main > article > header > * + * { margin-left: 5px }
 #main > article > header span { color: #808080; font-size: 14px }
+#main > article.small > header span { font-size: 12px }
 #main > article > header h2 { font-size: 30px }
+#main > article.small > header h2 { font-size: 24px }
 #main > article > header h2 a { color: #fff }
 #main > article > header > a { font-size: 20px }
+#main > article.small > header > a { font-size: 18px }
 #main > article > header > a[href="#"] { color: #808080; cursor: default }
 #main > article > p { margin: 0 }
 #main > article > p + p { margin-top: 10px }
+#main > article.small > .status-notice { font-size: 12px }
 @media (max-width: 800px) {
 	#main > article > header h2 { font-size: 24px }
 	#main > article > header > a { font-size: 18px } }
