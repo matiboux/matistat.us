@@ -171,7 +171,7 @@ var refresh = function() {
 				if(!value.success) {
 					$this.find('.status.status-online').removeClass().addClass('status status-online status-danger')
 						.parent().attr({title: 'Online Status: Request error.', http: value.http_code});
-					$this.find('.status-notice.status-online').html('Request error. (HTTP ' + value.http_code + ')');
+					$this.find('.status-notice.status-online').html('Request error.');
 				
 				/** HTTP 2xx - Service OK */
 				} else if(value.http_code >= 200 && value.http_code < 300) {
