@@ -253,15 +253,15 @@ var refresh = function() {
 				} else {
 					$this.find('.status.status-local').removeClass().addClass('status status-local status-danger')
 						.parent().attr({title: 'Local Status: Error!', http: xhr.status});
-					$this.find('.status-notice.status-local').html('Error! (HTTP ' + xhr.status + ')');
+					$this.find('.status-notice.status-local').html('Service error! (HTTP ' + xhr.status + ')');
 				}
 				
-				if(exception === 'parsererror') console.log(url, 'Impossible to parse result.');
-				else if(exception === 'timeout') console.log(url, 'Request timeout.');
-				else console.log(url, 'Error!');
+				if(textStatus === 'parsererror') console.log(url, 'Impossible to parse result.');
+				else if(textStatus === 'timeout') console.log(url, 'Request timeout.');
+				// else console.log(url, 'Error!');
 				
-				$this.find('.status.status-local').removeClass().addClass('status status-local status-danger');
-				$this.find('.status-notice.status-local').html('Service seems down :/');
+				// $this.find('.status.status-local').removeClass().addClass('status status-local status-danger');
+				// $this.find('.status-notice.status-local').html('Service seems down :/');
 			});
 		});
 	}
