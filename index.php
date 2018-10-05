@@ -51,6 +51,7 @@ $timeout = 10;
 /** List of supported services, and the url to ping */
 $supportedServices = array(
 	'matiboux.com' => 'https://matiboux.com/',
+	'matiboux.me' => 'https://matiboux.me/',
 	'matistat.us' => 'https://matistat.us/',
 	'imgshot.eu' => 'https://imgshot.eu/',
 	'urwebs.it' => 'https://urwebs.it/',
